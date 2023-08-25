@@ -16,5 +16,5 @@ export async function POST(req) {
     return NextResponse.json({ message: "ERROR" });
   }
 
-  return NextResponse.json({ message: "ok" });
+  return NextResponse.json({ message: "OK" });
 }

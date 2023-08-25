@@ -1,18 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
   const router = useRouter();
 
   const handleClick = async () => {
-    const response = await fetch("/api/payment", { method: "POST" });
+    // const response = await fetch("/api/payment", { method: "POST" });
+    // const data = await response.json();
+    // console.log(data);
+    // router.push(data.init_point);ç
 
-    const data = await response.json();
-
-    console.log(data);
-    router.push(data.init_point);
+    router.push(
+      "https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c9380848a223128018a2d94d284075e"
+    );
   };
 
   return (

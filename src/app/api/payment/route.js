@@ -14,8 +14,7 @@ export async function POST(req) {
       failure: "http://localhost:3000/api/failure",
       pending: "http://localhost:3000/api/pending",
     },
-    notification_url: "https://3c53-45-176-89-34.ngrok.io/api/webhook",
+    notification_url: "https://2662-45-176-89-34.ngrok.io/api/webhook",
   });
-
   return NextResponse.json(result.body);
 }
