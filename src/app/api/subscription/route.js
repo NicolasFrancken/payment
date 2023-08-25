@@ -3,10 +3,6 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 export async function POST(req) {
-  mercadopago.configure({
-    access_token:
-      "TEST-8758694386882879-082419-5831537b46055c9568c9865013ec300c-1459700923",
-  });
   try {
     const res = await axios.post(
       "https://api.mercadopago.com/preapproval",
@@ -33,7 +29,7 @@ export async function POST(req) {
 
     console.log(res.data);
 
-    return NextResponse.json({ message: "OK" });
+    return NextResponse.json(res.data);
   } catch (e) {
     console.log(e.data);
     return NextResponse.json({ message: "ERROR" });
