@@ -16,7 +16,7 @@ export async function POST(req) {
           transaction_amount: 999,
         },
         back_url: "https://www.google.com",
-        notification_url: "https://2662-45-176-89-34.ngrok.io/api/webhook",
+        notification_url: "https://af10-45-176-89-34.ngrok.io/api/webhook",
       },
       {
         headers: {
@@ -27,7 +27,7 @@ export async function POST(req) {
       }
     );
 
-    console.log(res.data);
+    console.log("subscription", res.data);
 
     return NextResponse.json(res.data);
   } catch (e) {
@@ -44,7 +44,7 @@ export async function GET(req) {
 
   try {
     const res = await mercadopago.preapproval.findById(
-      "2c9380848a219921018a2dcf199c07d3"
+      "2c9380848a2e71f2018a332739a90229"
     );
     // const res = await axios.get(
     //   "https://api.mercadopago.com/preapproval/search",
