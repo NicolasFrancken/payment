@@ -1,6 +1,9 @@
 import mercadopago from "mercadopago";
 import { NextResponse } from "next/server";
 
+const MP_TOKEN = process.env.MP_ACCESS_TOKEN;
+const NGROK_URL = process.env.NGROK_URL;
+
 export async function POST(req) {
   try {
     const { quantity } = await req.json();
@@ -20,8 +23,7 @@ export async function POST(req) {
     const quantityInt = Number(quantity);
 
     mercadopago.configure({
-      access_token:
-        "TEST-8758694386882879-082419-5831537b46055c9568c9865013ec300c-1459700923",
+      access_token: MP_TOKEN,
     });
 
     const result = await mercadopago.preferences.create({
@@ -33,11 +35,14 @@ export async function POST(req) {
           quantity: quantityInt,
         },
       ],
+      metadata: {
+        custom_field: "ACA TENES TU COOKIE PAPAAAAAAAA",
+      },
       back_urls: {
         success: "http://localhost:3000/success",
         failure: "http://localhost:3000/failure",
       },
-      notification_url: "https://7493-45-176-89-35.ngrok.io/api/webhook",
+      notification_url: `${NGROK_URL}/api/webhook`,
       auto_return: "approved",
       binary_mode: true,
     });

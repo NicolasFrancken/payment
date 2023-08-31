@@ -2,9 +2,10 @@ import mercadopago from "mercadopago";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
+  const MP_TOKEN = process.env.MP_ACCESS_TOKEN;
+
   mercadopago.configure({
-    access_token:
-      "TEST-8758694386882879-082419-5831537b46055c9568c9865013ec300c-1459700923",
+    access_token: MP_TOKEN,
   });
 
   const payment = await req.json();
@@ -15,7 +16,7 @@ export async function POST(req) {
     if (payment.type === "payment") {
       const data = await mercadopago.payment.findById(payment.data.id);
 
-      console.log(data.body.stauts, data.body.transaction_amount);
+      console.log(data);
     }
   } catch (e) {
     console.log(e);

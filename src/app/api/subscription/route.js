@@ -2,6 +2,8 @@ import mercadopago from "mercadopago";
 import { NextResponse } from "next/server";
 import axios from "axios";
 
+const MP_TOKEN = process.env.MP_ACCESS_TOKEN;
+
 export async function POST(req) {
   try {
     const res = await axios.post(
@@ -21,8 +23,7 @@ export async function POST(req) {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer TEST-8758694386882879-082419-5831537b46055c9568c9865013ec300c-1459700923",
+          Authorization: `Bearer ${MP_TOKEN}`,
         },
       }
     );
@@ -38,8 +39,7 @@ export async function POST(req) {
 
 export async function GET(req) {
   mercadopago.configure({
-    access_token:
-      "TEST-8758694386882879-082419-5831537b46055c9568c9865013ec300c-1459700923",
+    access_token: MP_TOKEN,
   });
 
   try {
@@ -51,8 +51,7 @@ export async function GET(req) {
     //   {
     //     headers: {
     //       "Content-Type": "application/json",
-    //       Authorization:
-    //         "Bearer TEST-8758694386882879-082419-5831537b46055c9568c9865013ec300c-1459700923",
+    //        Authorization: `Bearer ${MP_TOKEN}`,
     //     },
     //   }
     // );
