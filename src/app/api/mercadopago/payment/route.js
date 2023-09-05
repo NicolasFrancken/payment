@@ -36,13 +36,13 @@ export async function POST(req) {
         },
       ],
       metadata: {
-        custom_field: "ACA TENES TU COOKIE PAPAAAAAAAA",
+        custom_field: "COOKIE",
       },
       back_urls: {
         success: "http://localhost:3000/success",
         failure: "http://localhost:3000/failure",
       },
-      notification_url: `${NGROK_URL}/api/webhook`,
+      notification_url: `${NGROK_URL}/api/mercadopago/webhook`,
       auto_return: "approved",
       binary_mode: true,
     });

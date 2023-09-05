@@ -18,7 +18,7 @@ export async function POST(req) {
           transaction_amount: 999,
         },
         back_url: "https://www.google.com",
-        notification_url: "https://af10-45-176-89-34.ngrok.io/api/webhook",
+        notification_url: "https://af10-45-176-89-34.ngrok.io/api/mercadopago/webhook",
       },
       {
         headers: {

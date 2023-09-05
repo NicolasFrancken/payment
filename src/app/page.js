@@ -17,7 +17,7 @@ export default function Home() {
   const handleClick = async () => {
     try {
       const res = await axios.post(
-        "/api/payment",
+        "/api/coinbase/payment",
         {
           quantity: quantity,
         },
@@ -27,7 +27,9 @@ export default function Home() {
           },
         }
       );
-      router.push(res.data.init_point);
+
+      // console.log(res.data);
+      router.push(res.data.result.hosted_url);
     } catch (e) {
       setErrorMessage(e.response.statusText);
     }
