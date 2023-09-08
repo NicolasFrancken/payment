@@ -3,24 +3,12 @@ import { NextResponse } from "next/server";
 
 const MP_TOKEN = process.env.MP_ACCESS_TOKEN;
 const NGROK_URL = process.env.NGROK_URL;
+const USD = process.env.USD;
 
 export async function POST(req) {
   try {
-    const { quantity } = await req.json();
-
-    if (quantity < 1) {
-      return NextResponse.json(
-        {},
-        { status: 500, statusText: "Cannot buy less than 1 credit" }
-      );
-    } else if (quantity > 100) {
-      return NextResponse.json(
-        {},
-        { status: 500, statusText: "Cannot buy more than 100 credits" }
-      );
-    }
-
-    const quantityInt = Number(quantity);
+    const { email } = await req.json();
+    const userId = "12345";
 
     mercadopago.configure({
       access_token: MP_TOKEN,
@@ -29,20 +17,21 @@ export async function POST(req) {
     const result = await mercadopago.preferences.create({
       items: [
         {
-          title: "Credits",
-          unit_price: 700,
+          title: "180 Minutes",
+          unit_price: 5 * USD,
           currency_id: "ARS",
-          quantity: quantityInt,
+          quantity: 1,
         },
       ],
-      metadata: {
-        custom_field: "COOKIE",
-      },
       back_urls: {
         success: "http://localhost:3000/success",
         failure: "http://localhost:3000/failure",
       },
-      notification_url: `${NGROK_URL}/api/mercadopago/webhook`,
+      metadata: {
+        email: email,
+        user_id: userId,
+      },
+      notification_url: `${NGROK_URL}/api/webhooks/mercadopago`,
       auto_return: "approved",
       binary_mode: true,
     });
