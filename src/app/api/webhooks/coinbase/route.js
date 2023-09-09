@@ -20,7 +20,7 @@ export async function POST(req) {
       console.log("HAHA", event.data.metadata);
     }
 
-    return NextResponse.json({ message: "OK" });
+    return NextResponse.json(null, { status: 200 });
   } catch (e) {
     console.log(e);
     return NextResponse.json(
