@@ -23,9 +23,9 @@ export async function POST(req) {
     return NextResponse.json(null, { status: 200 });
   } catch (e) {
     console.log(e);
-    return NextResponse.json(
-      {},
-      { status: 500, statusText: "There was an error, please try again" }
-    );
+    return NextResponse.json(null, {
+      status: 500,
+      statusText: "There was an error, please try again",
+    });
   }
 }
