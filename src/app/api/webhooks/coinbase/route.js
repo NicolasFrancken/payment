@@ -1,5 +1,4 @@
 import { Webhook } from "coinbase-commerce-node";
-import express from "express";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 
@@ -18,7 +17,7 @@ export async function POST(req) {
     console.log("event", event);
 
     if (event.type === "charge:confirmed") {
-      console.log(event);
+      console.log("HAHA", event.data.metadata);
     }
 
     return NextResponse.json({ message: "OK" });
