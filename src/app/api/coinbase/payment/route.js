@@ -5,8 +5,6 @@ const COINBASE_TOKEN = process.env.COINBASE_TOKEN;
 const NGROK_URL = process.env.NGROK_URL;
 
 export async function POST(req) {
-  const { email } = await req.json();
-
   const { Client, resources } = coinbase;
 
   Client.init(COINBASE_TOKEN);
@@ -15,7 +13,7 @@ export async function POST(req) {
     const result = await resources.Charge.create({
       name: "60 Minutes",
       local_price: {
-        amount: 0.001,
+        amount: 0.2,
         currency: "USD",
       },
       pricing_type: "fixed_price",
@@ -23,7 +21,6 @@ export async function POST(req) {
       cancel_url: `${NGROK_URL}/failure`,
       metadata: {
         user_id: "12345",
-        email: email,
       },
     });
 

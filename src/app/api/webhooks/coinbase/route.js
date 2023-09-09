@@ -1,44 +1,24 @@
 import { Webhook } from "coinbase-commerce-node";
 import express from "express";
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 
 const COINBASE_WEBHOOK_SECRET = process.env.COINBASE_WEBHOOK_SECRET;
 
-const app = express();
-
-app.use(
-  express.json({
-    verify: (req, res, buf) => {
-      req.rawBody = buf;
-    },
-  })
-);
-
 export async function POST(req) {
-  const { rawBody } = req;
-  const signature = req.headers["x-cc-webhook-signature"];
+  const allHeaders = headers();
+
+  const rawBody = await req.json();
+  const stringBody = JSON.stringify(rawBody);
+  const signature = allHeaders.get("x-cc-webhook-signature");
   const webhookSecret = COINBASE_WEBHOOK_SECRET;
 
-  let event;
-
   try {
-    event = Webhook.verifyEventBody(rawBody, signature, webhookSecret);
-    console.log(event);
-
-    // if (event.type === "charge:pending") {
-    //   // received order
-    //   // user paid, but transaction not confirm on blockchain yet
-    //   console.log("pending payment");
-    // }
-
-    // if (event.type === "charge:failed") {
-    //   // cancel order
-    //   // charge failed or expired
-    //   console.log("charge failed");
-    // }
+    const event = Webhook.verifyEventBody(stringBody, signature, webhookSecret);
+    console.log("event", event);
 
     if (event.type === "charge:confirmed") {
-      console.log("charge confirme");
+      console.log(event);
     }
 
     return NextResponse.json({ message: "OK" });

@@ -10,13 +10,15 @@ import {
   CardHeader,
 } from "@nextui-org/react";
 
+const NGROK_URL = process.env.NGROK_URL;
+console.log(NGROK_URL);
+
 const PricingCard = ({ cardPrice, cardMins, chosen, cardText, index }) => {
   console.log(index);
   const router = useRouter();
 
   const handlePress = async (index) => {
     try {
-      // Usar el index para determinar la acción
       let endpoint = "";
       let email = "";
 
@@ -26,15 +28,12 @@ const PricingCard = ({ cardPrice, cardMins, chosen, cardText, index }) => {
           email = "mati@puto.com";
           break;
         case 2:
-          endpoint = "/api/mercadopago/payment/180"; // Rellena con la URL adecuada
+          endpoint = "/api/mercadopago/payment/180";
           email = "mati@puto.com";
           break;
         case 3:
-          endpoint = "/api/mercadopago/payment/360"; // Rellena con la URL adecuada
+          endpoint = "/api/mercadopago/payment/360";
           email = "mati@puto.com";
-          break;
-        default:
-          // Manejar otros casos si es necesario
           break;
       }
 
@@ -52,6 +51,43 @@ const PricingCard = ({ cardPrice, cardMins, chosen, cardText, index }) => {
 
       console.log(res.data);
       router.push(res.data.init_point);
+    } catch (e) {
+      console.error(e);
+      // Manejar errores si es necesario
+    }
+  };
+
+  const handleCoinbasePress = async (index) => {
+    try {
+      let endpoint = "";
+
+      switch (index) {
+        case 1:
+          endpoint = `/api/coinbase/payment`;
+
+          break;
+        case 2:
+          endpoint = "/api/coinbase/payment";
+
+          break;
+        case 3:
+          endpoint = "/api/coinbase/payment";
+
+          break;
+      }
+
+      const res = await axios.post(
+        endpoint,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(res.data);
+      router.push(res.data.result.hosted_url);
     } catch (e) {
       console.error(e);
       // Manejar errores si es necesario
@@ -133,6 +169,7 @@ const PricingCard = ({ cardPrice, cardMins, chosen, cardText, index }) => {
               color="default"
               radius="lg"
               size="sm"
+              onPress={() => handleCoinbasePress(index)}
             >
               USDT
             </Button>

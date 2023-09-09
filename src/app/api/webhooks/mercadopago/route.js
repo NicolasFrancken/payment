@@ -1,9 +1,9 @@
 import mercadopago from "mercadopago";
 import { NextResponse } from "next/server";
 
-export async function POST(req) {
-  const MP_TOKEN = process.env.MP_ACCESS_TOKEN;
+const MP_TOKEN = process.env.MP_ACCESS_TOKEN;
 
+export async function POST(req) {
   mercadopago.configure({
     access_token: MP_TOKEN,
   });
