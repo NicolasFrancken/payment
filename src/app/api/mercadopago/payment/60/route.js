@@ -38,15 +38,15 @@ export async function POST(req) {
         },
       ],
       back_urls: {
-        success: "http://localhost:3000/success",
-        failure: "http://localhost:3000/failure",
+        success: "http://localhost:3000",
+        failure: "http://localhost:3000?q=paymenterror",
       },
       metadata: {
         email: email,
         user_id: userId,
       },
       notification_url: `${NGROK_URL}/api/webhooks/mercadopago`,
-      auto_return: "approved",
+      auto_return: "all",
       binary_mode: true,
     });
     return NextResponse.json(result.body);

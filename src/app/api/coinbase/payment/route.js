@@ -17,8 +17,8 @@ export async function POST(req) {
         currency: "USD",
       },
       pricing_type: "fixed_price",
-      redirect_url: `${NGROK_URL}/success`,
-      cancel_url: `${NGROK_URL}/failure`,
+      redirect_url: `http://localhost:3000`,
+      cancel_url: `http://localhost:3000?q=paymenterror`,
       metadata: {
         user_id: "12345",
       },

@@ -20,6 +20,10 @@ export async function POST(req) {
       console.log("HAHA", event.data.metadata);
     }
 
+    if (event.type === "charge:failed") {
+      return NextResponse.redirect("http://localhost:3000?q=paymenterror");
+    }
+
     return NextResponse.json(null, { status: 200 });
   } catch (e) {
     console.log(e);

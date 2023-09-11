@@ -1,55 +1,28 @@
 "use client";
 
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Toaster, toast } from "sonner";
 
 import Tokens from "../components/Tokens";
 
 export default function Home() {
-  const [errorMessage, setErrorMessage] = useState("");
+  const searchParams = useSearchParams();
 
-  const router = useRouter();
-
-  const handleClick = async () => {
-    try {
-      const res = await axios.post(
-        "/api/coinbase/payment",
-        {
-          quantity: quantity,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      // console.log(res.data);
-      router.push(res.data.result.hosted_url);
-    } catch (e) {
-      setErrorMessage(e.response.statusText);
+  useEffect(() => {
+    const search = searchParams.get("q");
+    console.log(search);
+    if (search === "paymenterror") {
+      toast.error("There was a payment error!");
     }
-  };
+  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center h-screen ">
+      <Toaster position="top-center" richColors />
       <div className="flex ">
-        {/* <button
-          onClick={handleClick}
-          className="bg-gray-800 text-white px-2 py-1 rounded h-8 w-16 ml-1 text-semibold"
-        >
-          PAY
-        </button> */}
         <Tokens />
       </div>
-      {errorMessage ? (
-        <label className="text-red-500 pt-2 text-semibold">
-          {errorMessage}
-        </label>
-      ) : (
-        ""
-      )}
     </div>
   );
 }
