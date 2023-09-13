@@ -42,8 +42,8 @@ export async function POST(req) {
         failure: "http://localhost:3000?q=paymenterror",
       },
       metadata: {
-        email: email,
         user_id: userId,
+        quantity: 60,
       },
       notification_url: `${NGROK_URL}/api/webhooks/mercadopago`,
       auto_return: "all",
